@@ -8,5 +8,6 @@
     <string name="tflitevision_is_not_initialized_yet">TfLiteVision is not initialized yet</string>
     <string name="result_text">%1$s %2$.1f%%</string>
     <string name="result_image">result image</string>
+    <string name="related_cancer_news">Related Cancer News</string>
 
 </resources>

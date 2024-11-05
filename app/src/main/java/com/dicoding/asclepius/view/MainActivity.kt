@@ -20,7 +20,12 @@ class MainActivity : AppCompatActivity(), ImageClassifierHelper.ClassifierListen
     private lateinit var binding: ActivityMainBinding
     private var currentImageUri: Uri? = null
     private lateinit var imageClassifierHelper: ImageClassifierHelper
-    private var aspectRatio: Pair<Float, Float> = Pair(16f, 9f) // Default aspect ratio
+    private var aspectRatio: Pair<Float, Float> = Pair(16f, 9f)
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("imageUri", currentImageUri?.toString())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +33,14 @@ class MainActivity : AppCompatActivity(), ImageClassifierHelper.ClassifierListen
         setContentView(binding.root)
 
         imageClassifierHelper = ImageClassifierHelper(context = this, classifierListener = this)
+
+        if (savedInstanceState != null) {
+            val uriString = savedInstanceState.getString("imageUri")
+            if (uriString != null) {
+                currentImageUri = Uri.parse(uriString)
+                showImage()
+            }
+        }
 
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener { analyzeImage() }
